@@ -41,7 +41,7 @@ static U16     sgServPort = 19003;
 void * TcpClientLoopProc(void * arg)
 {
     char strBuf[1000] = {0};
-    static int sStrLen = 0;
+    int sStrLen = 0;
     int ret = ERR_SUCCESS;
     
     while(FALSE == sgThreadExit)
@@ -52,7 +52,10 @@ void * TcpClientLoopProc(void * arg)
             {
                 if (sStrLen == strlen(consExitStr) && strncmp(consExitStr, strBuf, strlen(consExitStr)) == 0)
                 {
-                    EXIT("rec exit cmd, now exit");
+                    sgThreadExit = TRUE;
+                    PrintWarn("rec exit cmd, now exit");
+                    break;
+                    //EXIT("rec exit cmd, now exit");
                 }
                 ret = TCPClientSendData((U8*)strBuf, sStrLen);
                 if (ret == ERR_TCP_ERR || ret == ERR_TCP_NO_CONT)
@@ -167,10 +170,10 @@ void UpdateServerIPPort(int argc, char **argv)
     }
     else
     {
-        printf("#############################");
+        printf("#############################\n");
         printf("\n\nusage: run client demo with server IP and tcp Port value can modify default IP and Port\n");
         printf("      eg:./client_demo 192.168.1.1 25502\n\n");
-        printf("#############################");
+        printf("#############################\n");
     }
         
 }

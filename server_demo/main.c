@@ -112,10 +112,10 @@ void UpdateServerIPPort(int argc, char **argv)
     }
     else
     {
-        printf("#############################");
-        printf("\n\nusage: run server demo with server tcp Port value can modify default IP and Port\n");
+        printf("#############################\n");
+        printf("\n\nusage: run server demo with server tcp Port value can modify default listen Port\n");
         printf("      eg:./server_demo 25502\n\n");
-        printf("#############################");
+        printf("#############################\n");
     }
 }
 

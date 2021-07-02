@@ -517,7 +517,7 @@ INT32 TcpCheckMultiCliData(int servFd, int* sockFdBuf, int maxFdCnt, int timeout
             ret = RecvTCPData(sockFdBuf[i], recvBuf, sizeof(recvBuf));
             if (ERR_TCP_ERR == ret)
             {
-                PrintWarn("get sockfd %d err %m.close current socket", sockFdBuf[i]);
+                PrintWarn("get sockfd %d err %m.close cli socket", sockFdBuf[i]);
                 FD_CLR(sockFdBuf[i], &catch_fd_set);
                 close(sockFdBuf[i]);
                 sockFdBuf[i] = -1;
