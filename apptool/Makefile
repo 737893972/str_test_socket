@@ -1,0 +1,33 @@
+include ../Rules.make
+
+TARGET			:=
+
+CFLAGS 		= 	-I .  -O2 -Wall $(PLATFORM)
+
+SOURCE 		= 	$(wildcard *.c)  $(wildcard *.cc)
+
+TEMPDIR		:= ./_obj
+OBJECTS 	= 	$(patsubst %.c,$(TEMPDIR)/%.o,$(SOURCE))
+
+
+all:$(TARGET)
+
+	
+$(TEMPDIR)/%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@ 
+	@echo "#################### Compile folder $(PWD)... ####################"
+	
+$(TARGET): $(OBJECTS)
+	@echo "#################### Compile OK! ####################"
+	@echo ""
+
+print:
+	@echo $(PWD)
+
+clean:
+	@echo "#################### Clean Start$(PWD) ####################"
+	find ./_obj -type f -name '*.o' -print | xargs rm -f
+	@echo "#################### Clean End ####################"
+	@echo ""
+
+
