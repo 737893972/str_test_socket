@@ -21,6 +21,7 @@
 #include "errcode.h"
 #include "socketapi.h"
 #include "devinfo.h"
+#include "timetool.h"
 
 
 #include <assert.h>

@@ -20,6 +20,7 @@
 #include "errcode.h"
 #include "upgrade_prot.h"
 #include "devinfo.h"
+#include "timetool.h"
 
 #include <unistd.h>
 #include <arpa/inet.h>

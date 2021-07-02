@@ -15,6 +15,8 @@
 #include "devinfo.h"
 #include "errcode.h"
 #include "crc16.h"
+#include "timetool.h"
+#include "errcode.h"
 
 
 #include <unistd.h>
@@ -63,7 +65,7 @@ void PrintHexBuf(unsigned char *buf,int len)
 }
 
 /*
- * 鑾峰彇MAC鍦板潃
+ * 
  */
 int GetNetMAC(const char* ifName, char *outBuf, INT32 maxOutLen)
 {
@@ -312,78 +314,7 @@ int GetFileContentTest(char* fileName, U8* outBuf, INT32 maxOutLen)
 }
 
 
-int GetTimeTm(struct tm * pTm)
-{
-	time_t timeSec = time(NULL);
-	memcpy(pTm, localtime(&timeSec), sizeof(struct tm));
-	
-	printf("%04d-%02d-%02d %02d:%02d:%02d\n",\
-		1900+pTm->tm_year, 1 + pTm->tm_mon, pTm->tm_mday, pTm->tm_hour, pTm->tm_min, pTm->tm_sec);  
-	return 0;
-}
 
-char* GetTimeStr(char* pStr, INT32 maxStrLen)
-{
-	assert(pStr != NULL);
-	
-	struct tm stTime; 
-	GetTimeTm(&stTime);
-	
-	snprintf(pStr, maxStrLen, "%04d%02d%02d%02d%02d%02d",\
-		1900+stTime.tm_year, 1 + stTime.tm_mon, stTime.tm_mday, stTime.tm_hour, stTime.tm_min, stTime.tm_sec);
-
-	return pStr;
-}
-
-BOOL ConvertCompileDate(char *pSrcDate, char *pDestDate, int maxDestLen)
-{
-	if(NULL == pSrcDate || NULL == pDestDate)
-	{
-		return FALSE;
-	}
-
-	const char englishMonth[12][4] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
-			"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-	char dateStr[40] = {0};
-	char monthStr[4] = {0};
-	int iYear = 0;
-	int iMonth = 0;
-	int iDay = 0;
-	int i = 0;
-
-	//获取编译日期
-	sprintf(dateStr, "%s", pSrcDate); /*格式为Sep 18 2010*/
-	sscanf(dateStr, "%s %d %d", monthStr, &iDay, &iYear);
-
-	for (i = 0;i < 12;i++)
-	{
-		if (strncmp(monthStr, englishMonth[i], 3) == 0)
-		{
-			iMonth = i + 1;
-			break;
-		}
-	}
-
-	snprintf(pDestDate, maxDestLen, "%04d%02d%02d", iYear, iMonth, iDay);
-	//printf("get date:%s\n", pDestDate);
-
-	return TRUE;
-}
-
-
-char* GetCompileTimeStr(char *pOutDate, int maxOutLen)
-{
-	int hour = 0;
-	int min = 0;
-	int sec = 0;
-	char compliedate[32] = {0};
-	ConvertCompileDate(__DATE__, compliedate, sizeof(compliedate));
-	
-	sscanf(__TIME__, "%02d:%02d:%02d", &hour, &min, &sec);
-
-	snprintf(pOutDate, maxOutLen,"%s-%02d%02d%02d", compliedate, hour, min, sec);
-	return pOutDate;
-}
 
 void Chmod(const char* srcFile, U32 mode)
 {
@@ -547,13 +478,6 @@ INT32 CopyFile(const char* oldFile, const char* newFile)
 	return ret;
 }
 
-U8* GetJsonTestData(int* outLen)
-{
-	static U8 json_test_ft[] = {};
-    *outLen = 0;//sizeof(json_test_ft);
-    return json_test_ft;
-
-}
 
 int GetAPList(const char* fileName, U8 listIP[][20], int maxListCnt)
 {
@@ -635,7 +559,6 @@ int GetWordsFromStr(const char *inBuf, int maxBufLen, const char* pchDilem, PPar
     ASSERT_DESC(pWordBuf != NULL, "pWordBuf null");
     
     if ((pTempBuf = (char*)malloc(maxBufLen + 1)) == NULL){
-        //ASSERT(pTempBuf != NULL);
         return ERR_MALLOC;
     }
 	snprintf(pTempBuf, maxBufLen + 1, "%s",inBuf);
@@ -643,12 +566,6 @@ int GetWordsFromStr(const char *inBuf, int maxBufLen, const char* pchDilem, PPar
     
 	while(NULL != ( pWord = strtok_r( pWord, pchDilem, &pchStrTmpIn) ))
 	{
-	    /*if( strlen(pWord) > OP_NAME_MAX_LEN)
-		{
-			PrintErr("word len too long", pWord[0]);
-			continue;
-		}*/
-        
 		snprintf(pWordBuf[count].word, OP_NAME_MAX_LEN, "%s", pWord);
 		PrintInfo("get word [%s]",pWordBuf[count].word);
 	    count ++;

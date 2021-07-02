@@ -16,12 +16,13 @@
 #if 1
 
 #include "glo_type.h"
-//#include "yx_upgrade_process.h"
+//#include "upgrade_process.h"
 #include "errcode.h"
 #include "devinfo.h"
-
+#include "timetool.h"
 #include "upgrade_prot.h"
 #include "socketapi.h"
+#include "timetool.h"
 
 
 #include <stdio.h>

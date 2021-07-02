@@ -17,12 +17,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "timetool.h"
+
 
 
 #if 1
 
-//#define NDEBUG //cancle assert and Print msg
+#define NDEBUG //cancle assert and Print msg
 
 #define MAX_TCP_SERVER_ACCEPT_CNT   20
 
@@ -31,8 +31,8 @@
         
 
 #ifdef NDEBUG
-    #define ASSERT(EXPRESSION)                  do{ return ERR_UNKONW_ERR; }while(0)
-    #define ASSERT_DESC(EXPRESSION, descStr)    do{ return ERR_UNKONW_ERR; }while(0)//should return exactly errcode TODO 
+    #define ASSERT(EXPRESSION)                  do{ /*return ERR_UNKONW_ERR;*/exit(0); }while(0)
+    #define ASSERT_DESC(EXPRESSION, descStr)    do{ /*return ERR_UNKONW_ERR;*/exit(0); }while(0)//should return exactly errcode TODO 
     #define EXIT(echoStr)                       do{  exit(0);}while(0)
     
 #else

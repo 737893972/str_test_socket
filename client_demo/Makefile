@@ -21,7 +21,7 @@ all: $(TARGET)
 
 	
 
-$(TEMPDIR)/%.o: %.c
+$(TEMPDIR)/%.o: %.c $(INC_PUBLIC)/*.h
 	@if [ ! -d $(TEMPDIR) ]; then mkdir -p $(TEMPDIR); fi
 	$(CC) $(CFLAGS) -c $< -o $@ 
 

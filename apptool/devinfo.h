@@ -44,12 +44,6 @@ int GetFileCkSum(const char* file, U16* cksum, U32 maxReadSize);
 
 int GetFileContent(char* fileName, U16 index, U16 pkgSize, U8* outBuf, INT32 maxOutLen);
 
-char* GetTimeStr(char* pStr, INT32 maxStrLen);
-
-BOOL ConvertCompileDate(char *pSrcDate, char *pDestDate, int maxDestLen);
-
-char* GetCompileTimeStr(char *pOutDate, int maxOutLen);
-
 void Chmod(const char* srcFile, U32 mode);
 
 void RegisterSignalProc(void);

@@ -1,4 +1,13 @@
-#include "glo_type.h"
+/**
+ * FileName: 
+ *
+ * Copyright (C) 
+ *
+ * Created: 
+ * Author: 
+ *
+ * Description: 
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,7 +50,7 @@ void mutex_destroy(pthread_mutex_t *mutex)
 {
 	if (mutex != NULL){
 		pthread_mutex_destroy(mutex);
-		Free(mutex);
+		free(mutex);
 	}
 }
 
@@ -82,7 +91,8 @@ void thread_exit(void)
 
 
 /*
- * 功能：创建线�? */
+ * 
+ */
 pthread_t * CreateManageThread(void * arg, void *(*func)(void *))
 {
 	pthread_t *ManageThreadID = NULL;
@@ -96,7 +106,8 @@ pthread_t * CreateManageThread(void * arg, void *(*func)(void *))
 
 
 /*
- * 功能：回收线�? */
+ * 
+ */
 int StopManageLogicThread(pthread_t* ManageThreadID)
 {
 	if(ManageThreadID)
@@ -105,7 +116,7 @@ int StopManageLogicThread(pthread_t* ManageThreadID)
 		{
 			pthread_join(*ManageThreadID, NULL);
 		}
-		Free(ManageThreadID);
+		free(ManageThreadID);
 		ManageThreadID = NULL;
 	}
 

@@ -18,6 +18,7 @@
 #include "devinfo.h"
 #include "socketapi.h"
 #include "crc16.h"
+#include "timetool.h"
 
 #include "tcpserverproc.h"
 
@@ -219,7 +220,7 @@ int TcpServMultiCliProc(void)
     ASSERT_DESC(ret != ERR_TCP_ERR, " serv fd accept err");
     
     ret = TcpCheckMultiCliData(gTcpSocket, &sgCliCommFd[0],MAX_TCP_SERVER_ACCEPT_CNT, \
-            1000, recvBuf, sizeof(recvBuf), &cliIdx);
+            200, recvBuf, sizeof(recvBuf), &cliIdx);
     if (ret <= 0)
     {
         return ERR_NONE_DATA;
