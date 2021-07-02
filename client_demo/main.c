@@ -105,10 +105,16 @@ void ProFuncInit(void)
 
     ret = TCPClientCacheInit();
     ASSERT_DESC(ret == ERR_SUCCESS, "cache malloc failed");
-    
+    if (ret < ERR_SUCCESS)
+    {
+        EXIT("client init failed,exit");
+    }
     ret = TCPTryConnectServer(sgServIPBuf, sgServPort);
     ASSERT_DESC(ret == ERR_SUCCESS, "tcp connected failed");
-
+    if (ret < ERR_SUCCESS)
+    {
+        EXIT("client init failed,exit");
+    }
     sg_tcpProcThreadID = CreateManageThread(NULL, TcpClientLoopProc);
 
     return;

@@ -10,12 +10,12 @@ TEMPDIR		:= ./_obj
 OBJECTS 	= 	$(patsubst %.c,$(TEMPDIR)/%.o,$(SOURCE))
 
 
-all:$(TARGET)
+all:$(OBJECTS)
 
-	
 $(TEMPDIR)/%.o: %.c
+	@if [ ! -d $(TEMPDIR) ]; then mkdir -p $(TEMPDIR); fi
 	$(CC) $(CFLAGS) -c $< -o $@ 
-	@echo "#################### Compile folder $(PWD)... ####################"
+	
 	
 $(TARGET): $(OBJECTS)
 	@echo "#################### Compile OK! ####################"

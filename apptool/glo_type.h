@@ -31,8 +31,8 @@
         
 
 #ifdef NDEBUG
-    #define ASSERT(EXPRESSION)                  do{ ; }while(0)
-    #define ASSERT_DESC(EXPRESSION, descStr)    do{ ; }while(0)
+    #define ASSERT(EXPRESSION)                  do{ return; }while(0)
+    #define ASSERT_DESC(EXPRESSION, descStr)    do{ return; }while(0)
     #define EXIT(echoStr)                       do{  exit(0);}while(0)
     
 #else
@@ -40,6 +40,7 @@
                 do {                                                          \
                     if (!(EXPRESSION)) {                                      \
                         PrintErr("assert func %s line %d", __func__, __LINE__);\
+                        exit(0);\
                     }                                                         \
                 } while(0)
 

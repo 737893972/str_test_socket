@@ -56,9 +56,17 @@ void ProFuncInit(void)
 
     ret = TCPServerCacheInit();
     ASSERT_DESC(ret == ERR_SUCCESS, "cache malloc failed");
+    if (ret < ERR_SUCCESS)
+    {
+        EXIT("client init failed,exit");
+    }
 
     ret = TCPServerSocketInit(sgServPort);
     ASSERT_DESC(ret == ERR_SUCCESS, "tcp server established fail");
+    if (ret < ERR_SUCCESS)
+    {
+        EXIT("client init failed,exit");
+    }
 
 	sg_tcpServerThreadID = CreateManageThread(NULL, TCPUpgradeProcess);
 }

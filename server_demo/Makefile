@@ -10,7 +10,7 @@ CFLAGS 	= 	-I . -I $(INC_PUBLIC) -O2 -Wall $(PLATFORM)
 SOURCE 	= 	$(wildcard *.c)  $(wildcard *.cc)
 SOURCE_PUB 	= 	 $(wildcard $(SRC_PUBLIC)/*.c)
 
-TEMPDIR	:= ./_obj
+TEMPDIR	:= _obj
 TEMPDIR_PUB	:= $(SRC_PUBLIC)/_obj
 OBJECTS 	= 	$(patsubst %.c,$(TEMPDIR)/%.o,$(SOURCE))
 OBJECTS_PUB = 	$(patsubst $(TEMPDIR_PUB)%.c,$(TEMPDIR_PUB)/%.o,$(SOURCE_PUB))
@@ -21,6 +21,7 @@ all: $(TARGET)
 
 
 $(TEMPDIR)/%.o: %.c
+	@if [ ! -d $(TEMPDIR) ]; then mkdir -p $(TEMPDIR); fi
 	$(CC) $(CFLAGS) -c $< -o $@ 
 
 
